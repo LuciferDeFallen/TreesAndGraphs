@@ -40,8 +40,15 @@ public:
     // Query functions
     bool isEmpty() const;
 
+    int getSize();
+
+    void insertChild(Graph<T>::Vertex* parent, T data, const std::string& comment);
+
+    void insertChild(Graph<T>::Vertex parent, T data, const std::string& comment);
+
     // Insertion functions
     Vertex* insertNode(T data, const std::string& comment = "");
+    void insertRandom(T data, const std::string& comment);
     Edge* insertEdge(Vertex* source, Vertex* destination, const std::string& comment = "");
 
     // Deletion functions

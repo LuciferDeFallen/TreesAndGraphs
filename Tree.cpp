@@ -1,5 +1,7 @@
 #include "Tree.h"
 #include <queue>
+#include <cstdlib>
+#include <ctime>
 
 template <typename T>
 Tree<T>::Tree() : root(nullptr) {}
@@ -118,7 +120,38 @@ void Tree<T>::insertChild(Node<T>* parent, T value, const std::string& comment) 
 
 template <typename T>
 void Tree<T>::insertRandom(T value, const std::string& comment) {
-    // Implement logic to insert a node randomly
+    if (root == nullptr) {
+        // Insert as root if tree is empty
+        insertRoot(value, comment);
+        return;
+    }
+
+    // set rseed and generate random index in tree size
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    int randomPosition = std::rand() % getSize();
+
+    // find node at generated index and insert child
+    Node<T>* targetNode = findNodeAtPosition(root, randomPosition);
+    insertChild(targetNode, value, comment);
+}
+
+template <typename T>
+Node<T>* Tree<T>::findNodeAtPosition(Node<T>* startNode, int& position) const {
+    if (startNode == nullptr) return nullptr;
+
+    // If the current node is the target position, return startNode
+    if (position == 0) return startNode;
+
+    // Decrement pos
+    position--;
+
+    // Recursive search in children
+    for (Node<T>* child : startNode->children) {
+        Node<T>* result = findNodeAtPosition(child, position);
+        if (result != nullptr) return result;
+    }
+
+    return nullptr;
 }
 
 template <typename T>

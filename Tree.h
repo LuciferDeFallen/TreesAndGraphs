@@ -58,6 +58,8 @@ public:
 
     void insertRandom(T value, const std::string& comment = "");
 
+    Node<T>* findNodeAtPosition(Node<T>* startNode, int& position) const;
+
     void deleteNode(Node<T>* node);
 
     void depthFirstTraversal(Node<T>* node) const;

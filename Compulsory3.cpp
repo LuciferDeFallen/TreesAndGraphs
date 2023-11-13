@@ -21,6 +21,7 @@ int main() {
     Graph<int>::Vertex* node3 = graph.insertNode(3, "Node 3");
     Graph<int>::Vertex* node4 = graph.insertNode(4, "Node 4");
     Graph<int>::Vertex* node5 = graph.insertNode(5, "Node 5");
+    graph.insertRandom(-1, "A randomly inserted node");
 
     // cout << "Comment for node4: " << graph.getNodeComment(node4) << "\n"; // Using stored pointer
 
@@ -40,7 +41,7 @@ int main() {
     std::cout << "Number of vertices: " << graph.getVertexCount() << "\n";
     std::cout << "Number of edges: " << graph.getEdgeCount() << "\n";
 
-
+    
     cout << "\nBreadth-first traversal:\n";
     graph.breadthFirstTraversal(node1);
 
@@ -60,6 +61,7 @@ int main() {
     cout << "\nAfter deletions:\n";
     cout << "Number of vertices: " << graph.getVertexCount() << "\n";
     cout << "Number of edges: " << graph.getEdgeCount() << "\n";
+
 
     cout << "\nBreadth-first traversal:\n";
     graph.breadthFirstTraversal(node1);
@@ -127,6 +129,9 @@ int main() {
     cout << "tree.getSize() " <<
         tree.getSize() << "\n"; // Get size
 
+    cout << "\nInserting some random nodes\n";
+    tree.insertRandom("A randomly inserted node 1", "");
+    tree.insertRandom("A randomly inserted node 2", "");
     cout << "\nDepht-first traversal:\n";
     tree.depthFirstTraversal();
 

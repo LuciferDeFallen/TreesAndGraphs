@@ -3,6 +3,9 @@
 #include <queue>
 #include <set>
 
+#include <cstdlib>
+#include <ctime>
+
 template <typename T>
 Graph<T>::Graph() {}
 
@@ -42,12 +45,36 @@ bool Graph<T>::isEmpty() const {
     return vertices.empty();
 }
 
+template <typename T>
+int Graph<T>::getSize() {
+    return getVertexCount();
+}
+
+template <typename T>
+void Graph<T>::insertChild(Graph<T>::Vertex* parent, T data, const std::string& comment) {
+    //Graph<T>::Vertex* ins = ;
+    insertEdge(parent, insertNode(data, comment));
+}
 
 template <typename T>
 typename Graph<T>::Vertex* Graph<T>::insertNode(T data, const std::string& comment) {
     Vertex* newVertex = new Vertex{ data, comment, {} };
     vertices.push_back(newVertex);
     return newVertex;
+}
+
+template <typename T>
+void Graph<T>::insertRandom(T data, const std::string& comment) {
+    if (getSize() == 0) { 
+        insertNode(data, comment); 
+        return; 
+    }
+
+    // Random position
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    int randomPosition = std::rand() % getSize();
+
+    insertChild(*next(vertices.begin(), randomPosition), data, comment);
 }
 
 template <typename T>
@@ -103,7 +130,7 @@ void Graph<T>::deleteEdge(Vertex* source, Vertex* destination) {
 
 template <typename T>
 void Graph<T>::depthFirstTraversal(Vertex* startNode) const {
-    // Implement depth-first traversal logic
+    // unused
 }
 
 template <typename T>
@@ -116,7 +143,6 @@ void Graph<T>::breadthFirstTraversal(Vertex* startNode) const {
     std::queue<Vertex*> bfsQueue;
     std::set<Vertex*> visited;
 
-    // Enqueue the starting node
     bfsQueue.push(startNode);
     visited.insert(startNode);
 
@@ -126,7 +152,7 @@ void Graph<T>::breadthFirstTraversal(Vertex* startNode) const {
         bfsQueue.pop();
         std::cout << "Visited Node " << getNodeData(currentVertex) << "\n";
 
-        // Enqueue all unvisited neighbors
+        // Queue all unvisited neighbors
         for (const auto& pair : currentVertex->adjacentVertices) {
             Vertex* neighbor = pair.second;
             if (visited.find(neighbor) == visited.end()) {
